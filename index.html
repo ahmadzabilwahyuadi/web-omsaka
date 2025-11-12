@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,65 +12,67 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-
         /* Smooth scroll untuk anchor links */
         html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
-
-<body class="overflow-x-hidden bg-gray-50" x-data="{ modalOpen: false, selectedProduct: '' }">
+<body class="overflow-x-hidden bg-gray-50" x-data="{
+    modalOpen: false,
+    selectedProduct: '',
+    shippingOption: '',
+    openModal(productName) {
+        this.selectedProduct = productName;
+        this.modalOpen = true;
+    },
+    confirmOrder() {
+        if (!this.shippingOption) {
+            alert('Silakan pilih opsi pengiriman terlebih dahulu!');
+            return;
+        }
+        const message = `Halo, saya ingin mengisi form pemesanan berikut:\n\nProduk: ${this.selectedProduct}\nOpsi Pengiriman: ${this.shippingOption}\n\nNo Telp: \nAlamat Email: \nJenis Game: \nBukti Pembayaran: `;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/62087867105416?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+        this.modalOpen = false;
+        this.shippingOption = '';
+    }
+}">
     <!-- Header Baru dengan Tailwind dan Alpine.js -->
     <header class="py-4 md:py-6" x-data="{expanded: false}">
         <div class="container px-4 mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between">
                 <div class="flex-shrink-0">
-                    <a href="#" title=""
-                        class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        <img class="w-auto h-8" src="https://cdn.rareblocks.xyz/collection/clarity/images/logo.svg"
-                            alt="Logo Marketplace" />
+                    <a href="#" title="" class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
+                        <img class="w-auto h-8" src="https://cdn.rareblocks.xyz/collection/clarity/images/logo.svg" alt="Logo Marketplace" />
                     </a>
                 </div>
 
                 <div class="flex lg:hidden">
                     <button type="button" class="text-gray-900" @click="expanded = !expanded" :aria-expanded="expanded">
                         <span x-show="!expanded" aria-hidden="true">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M4 6h16M4 12h16M4 18h16" />
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </span>
                         <span x-show="expanded" aria-hidden="true">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </span>
                     </button>
                 </div>
 
                 <div class="hidden lg:flex lg:ml-16 lg:items-center lg:justify-center lg:space-x-10 xl:space-x-16">
-                    <a href="#products" title=""
-                        class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        Produk </a>
-                    <a href="#pricing" title=""
-                        class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        Harga </a>
-                    <a href="#automation" title=""
-                        class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        Otomasi </a>
+                    <a href="#products" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Produk </a>
+                    <a href="#pricing" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Harga </a>
+                    <a href="#automation" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Otomasi </a>
                 </div>
 
                 <div class="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-10">
-                    <a href="#login" title=""
-                        class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        Login Pelanggan </a>
-                    <a href="#" title=""
-                        class="inline-flex items-center justify-center px-6 py-3 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                        role="button">
+                    <a href="#login" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Login Pelanggan </a>
+                    <a href="#" title="" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
                         Daftar
                     </a>
                 </div>
@@ -80,21 +81,11 @@
             <nav x-show="expanded" x-collapse>
                 <div class="px-1 py-8">
                     <div class="grid gap-y-7">
-                        <a href="#products" title=""
-                            class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                            Produk </a>
-                        <a href="#pricing" title=""
-                            class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                            Harga </a>
-                        <a href="#automation" title=""
-                            class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                            Otomasi </a>
-                        <a href="#login" title=""
-                            class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                            Login Pelanggan </a>
-                        <a href="#" title=""
-                            class="inline-flex items-center justify-center px-6 py-3 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                            role="button">
+                        <a href="#products" title="" class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Produk </a>
+                        <a href="#pricing" title="" class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Harga </a>
+                        <a href="#automation" title="" class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Otomasi </a>
+                        <a href="#login" title="" class="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Login Pelanggan </a>
+                        <a href="#" title="" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
                             Daftar
                         </a>
                     </div>
@@ -108,38 +99,27 @@
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center">
                 <h1 class="px-6 text-lg text-gray-600 font-inter">Marketplace Game Terbaik untuk Obat Stress Anda</h1>
-                <p
-                    class="mt-5 text-4xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-6xl lg:leading-tight font-pj">
+                <p class="mt-5 text-4xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-6xl lg:leading-tight font-pj">
                     Temukan game favorit Anda di Marketplace Game Osakamiamizu
                     <span class="relative inline-flex sm:inline">
-                        <span
-                            class="bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0"></span>
+                        <span class="bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0"></span>
                         <span class="relative"> sekarang! </span>
                     </span>
                 </p>
 
                 <div class="px-8 sm:items-center sm:justify-center sm:px-0 sm:space-x-5 sm:flex mt-9">
-                    <a href="#products" title=""
-                        class="inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                        role="button">
+                    <a href="#products" title="" class="inline-flex items-center justify-center w-full px-8 py-3 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
                         Dapatkan Lebih Banyak Game
                     </a>
-                    <a href="#" title=""
-                        class="inline-flex items-center justify-center w-full px-6 py-3 mt-4 text-lg font-bold text-gray-900 transition-all duration-200 border-2 border-gray-400 sm:w-auto sm:mt-0 rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-gray-900 focus:bg-gray-900 hover:text-white focus:text-white hover:border-gray-900 focus:border-gray-900"
-                        role="button">
-                        <svg class="w-5 h-5 mr-2" viewBox="0 0 18 18" fill="none" stroke="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M8.18003 13.4261C6.8586 14.3918 5 13.448 5 11.8113V5.43865C5 3.80198 6.8586 2.85821 8.18003 3.82387L12.5403 7.01022C13.6336 7.80916 13.6336 9.44084 12.5403 10.2398L8.18003 13.4261Z"
-                                stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
-                                stroke-linejoin="round" />
+                    <a href="#" title="" class="inline-flex items-center justify-center w-full px-6 py-3 mt-4 text-lg font-bold text-gray-900 transition-all duration-200 border-2 border-gray-400 sm:w-auto sm:mt-0 rounded-xl font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-gray-900 focus:bg-gray-900 hover:text-white focus:text-white hover:border-gray-900 focus:border-gray-900" role="button">
+                        <svg class="w-5 h-5 mr-2" viewBox="0 0 18 18" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.18003 13.4261C6.8586 14.3918 5 13.448 5 11.8113V5.43865C5 3.80198 6.8586 2.85821 8.18003 3.82387L12.5403 7.01022C13.6336 7.80916 13.6336 9.44084 12.5403 10.2398L8.18003 13.4261Z" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         Lihat Demo Gratis
                     </a>
                 </div>
 
-                <p class="mt-8 text-base text-gray-500 font-inter">60 Hari uji coba gratis · Tidak perlu kartu kredit
-                </p>
+                <p class="mt-8 text-base text-gray-500 font-inter">60 Hari uji coba gratis · Tidak perlu kartu kredit</p>
             </div>
         </div>
 
@@ -148,9 +128,7 @@
                 <div class="absolute inset-0 h-2/3 bg-gray-50"></div>
                 <div class="relative mx-auto">
                     <div class="lg:max-w-6xl lg:mx-auto">
-                        <img class="transform scale-110"
-                            src="https://cdn.rareblocks.xyz/collection/clarity/images/hero/2/illustration.png"
-                            alt="Ilustrasi Hero" />
+                        <img class="transform scale-110" src="https://cdn.rareblocks.xyz/collection/clarity/images/hero/2/illustration.png" alt="Ilustrasi Hero" />
                     </div>
                 </div>
             </div>
@@ -163,51 +141,41 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
             <!-- Produk 1 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="https://i.scdn.co/image/ab67616d0000b273bd054fde43a32b1401505709" alt="perjalanan amba"
-                    class="w-full h-48 object-cover rounded">
+                <img src="https://i.scdn.co/image/ab67616d0000b273bd054fde43a32b1401505709" alt="perjalanan amba" class="w-full h-48 object-cover rounded">
                 <h3 class="text-xl font-semibold mt-4">perjalanan amba</h3>
                 <p class="text-gray-600 mt-2">ambatublowww.</p>
                 <div class="text-lg font-bold text-red-500 mt-2">Rp 15.000.000</div>
-                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600"
-                    @click="openModal('perjalanan amba')">Beli Sekarang</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600" @click="openModal('perjalanan amba')">Beli Sekarang</button>
             </div>
             <!-- Produk 2 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/2873080/5110fecd4a0994ede89e663ce8bb0c2b20a1e3fc.jpg"
-                    alt="The NOexistenceN of you AND me" class="w-full h-48 object-cover rounded">
+                <img src="https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/2873080/5110fecd4a0994ede89e663ce8bb0c2b20a1e3fc.jpg" alt="The NOexistenceN of you AND me" class="w-full h-48 object-cover rounded">
                 <h3 class="text-xl font-semibold mt-4">The NOexistenceN of you AND me</h3>
                 <p class="text-gray-600 mt-2">myy binikkk.</p>
                 <div class="text-lg font-bold text-red-500 mt-2">Rp 4.500.000</div>
-                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600"
-                    @click="openModal('The NOexistenceN of you AND me')">Beli Sekarang</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600" @click="openModal('The NOexistenceN of you AND me')">Beli Sekarang</button>
             </div>
             <!-- Produk 3 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="https://i0.wp.com/www.lapakgaming.com/blog/id-id/wp-content/uploads/2023/11/zenless-zone-zero-2.webp?fit=1920%2C1080&ssl=1"
-                    alt="gooner game" class="w-full h-48 object-cover rounded">
+                <img src="https://i0.wp.com/www.lapakgaming.com/blog/id-id/wp-content/uploads/2023/11/zenless-zone-zero-2.webp?fit=1920%2C1080&ssl=1" alt="gooner game" class="w-full h-48 object-cover rounded">
                 <h3 class="text-xl font-semibold mt-4">gooner game</h3>
                 <p class="text-gray-600 mt-2">best gunner game.</p>
                 <div class="text-lg font-bold text-red-500 mt-2">Rp 1.200.000</div>
-                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600"
-                    @click="openModal('game gooning')">Beli Sekarang</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600" @click="openModal('game gooning')">Beli Sekarang</button>
             </div>
             <!-- Produk 4 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="https://img.amiami.com/images/product/review/244/GAME-0031516_11.jpg" alt="DAL PS5"
-                    class="w-full h-48 object-cover rounded">
+                <img src="https://img.amiami.com/images/product/review/244/GAME-0031516_11.jpg" alt="DAL PS5" class="w-full h-48 object-cover rounded">
                 <h3 class="text-xl font-semibold mt-4">DAL PS5</h3>
                 <p class="text-gray-600 mt-2">emrf4km4mt.</p>
                 <div class="text-lg font-bold text-red-500 mt-2">Rp 150.000</div>
-                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600"
-                    @click="openModal('DAL PS5')">Beli Sekarang</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600" @click="openModal('DAL PS5')">Beli Sekarang</button>
             </div>
         </div>
     </div>
 
     <!-- Modal untuk Opsi Pengiriman (Menggunakan Alpine.js) -->
-    <div x-show="modalOpen" x-transition
-        class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
-        @click.away="modalOpen = false">
+    <div x-show="modalOpen" x-transition class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center" @click.away="modalOpen = false">
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
             <span class="float-right text-gray-500 cursor-pointer text-2xl" @click="modalOpen = false">&times;</span>
             <h3 class="text-xl font-semibold mb-4" x-text="selectedProduct"></h3>
@@ -218,43 +186,12 @@
                 <option value="One Day">One Day</option>
                 <option value="Reguler">Reguler</option>
             </select>
-            <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                @click="confirmOrder()">Konfirmasi Pesanan</button>
+            <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" @click="confirmOrder()">Konfirmasi Pesanan</button>
         </div>
     </div>
 
     <footer class="bg-gray-900 text-white text-center py-4">
         <p>&copy; osakamiamizu.</p>
     </footer>
-
-    <script>
-        // Fungsi untuk modal dengan Alpine.js
-        function openModal(productName) {
-            Alpine.store('modal', { modalOpen: true, selectedProduct: productName, shippingOption: '' });
-        }
-
-        function confirmOrder() {
-            const store = Alpine.store('modal');
-            if (!store.shippingOption) {
-                alert('Silakan pilih opsi pengiriman terlebih dahulu!');
-                return;
-            }
-            const message = `Halo, saya ingin mengisi form pemesanan berikut:\n\nProduk: ${store.selectedProduct}\nOpsi Pengiriman: ${store.shippingOption}\n\nNo Telp: \nAlamat Email: \nJenis Game: \nBukti Pembayaran: `;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/62087867105416?text=${encodedMessage}`;
-            window.open(whatsappUrl, '_blank');
-            store.modalOpen = false;
-        }
-
-        // Inisialisasi Alpine store
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('modal', {
-                modalOpen: false,
-                selectedProduct: '',
-                shippingOption: ''
-            });
-        });
-    </script>
 </body>
-
 </html>
